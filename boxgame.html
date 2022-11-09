@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game</title>
+    <style>
+    body {
+        background-color:powderblue;
+    }
+    *{
+        margin:0;
+        padding:0;
+    }
+    #game{
+        width:300px;
+        height:500px;
+        border:10px solid white;
+        margin:auto;
+        overflow:hidden;
+    }
+    #character{
+        width:100px;
+        height:100px;
+        background-color:blue;
+        position:relative;
+        top:300px;
+        left:100px;
+    }
+    #block{
+        width:100px;
+        height:100px;
+        background-color:black;
+        animation: slide 1s linear infinite;
+        position:relative;
+    }
+    @keyframes slide{
+        0%{
+            top:-100px;
+        }
+        100%{
+            top:500px;
+        }
+    }
+    </style>
+</head>
+<body>
+    <hr color="black">
+    <center><h1><strong>BLACKBOX-ESCAPE!!</strong></h1></center><br><br>
+    <center><h3>Click buttons < and > to move the box</h3></center> <br><br>
+    <div id="game">
+        <div id="block"></div>
+        <div id="character"></div>
+    </div>
+    <script>
+        var character =document.getElementById('character');
+        var counter=0;
+        function moveLeft(){
+            let left=parseInt(window.getComputedStyle(character).getPropertyValue("left"));
+            left -=100;
+            if(left >=0){
+                character.style.left=left+"px";
+            }
+        }
+        function moveRight(){
+            let left=parseInt(window.getComputedStyle(character).getPropertyValue("left"));
+            left +=100;
+            if(left<300){
+                character.style.left= left +"px";
+            }
+        }
+        document.addEventListener("keydown",event =>{
+            if(event.key==="ArrowLeft"){moveLeft();}
+            if(event.key==="ArrowRight"){moveRight();}
+        })
+        var block=document.getElementById("block");
+        block.addEventListener("animationiteration",() =>{
+            var random=Math.floor(Math.random()*3);
+            left=random*100;
+            block.style.left= left + "px";
+            counter++;
+        })
+        setInterval(function() {
+            var
+            characterLeft=parseInt(window.getComputedStyle(character).getPropertyValue("left"));
+            var
+            blockLeft=parseInt(window.getComputedStyle(block).getPropertyValue("left"));
+            var
+            blockTop=parseInt(window.getComputedStyle(block).getPropertyValue("top"));
+            if(characterLeft == blockLeft && blockTop< 500 && blockTop>300){
+                alert("GAME OVER!! SCORE:" +counter);
+                
+                block.style.animation="none";
+            }
+        }, 1)
+        </script>
+ </body>
+ </html>
